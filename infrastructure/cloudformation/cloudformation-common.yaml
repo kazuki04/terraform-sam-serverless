@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: This template creates Common AWS Resources for the project.
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: 'The Service name.'
+  EnvironmentIdentifier:
+    Type: String
+    Description: 'The environment identifier.'
+
+Resources:
+################################################################################
+# KMS
+################################################################################
+  CommonKms:
+    Type: AWS::KMS::Key
+    Properties:
+      Description:
+        Fn::Sub: KMS key for ${ServiceName} in ${EnvironmentIdentifier}"
+      KeyPolicy:
+        Version: '2012-10-17'
+        Id:
+          Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-common-policy-kms"
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Sub: arn:aws:iam::${AWS::AccountId}:root
+            Action: kms:*
+            Resource: '*'
+      Tags:
+        - Key: "Name"
+          Value:
+            Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-common-kms"
+        - Key: "EnvironmentIdentifier"
+          Value:
+            Ref: EnvironmentIdentifier
+
+  CommonKmsAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName:
+        Fn::Sub: "alias/${ServiceName}-${EnvironmentIdentifier}-common-kms-alias"
+      TargetKeyId:
+        Ref: CommonKms
+
+################################################################################
+# S3
+################################################################################
+  CommonBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-common-s3"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: "aws:kms"
+              KMSMasterKeyID:
+                Ref: CommonKms
+            BucketKeyEnabled: true
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: "Name"
+          Value:
+            Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-common-s3"
+        - Key: "EnvironmentIdentifier"
+          Value:
+            Ref: EnvironmentIdentifier
+
+################################################################################
+# CodeCommit
+################################################################################
+  CommonRepo:
+    Type: AWS::CodeCommit::Repository
+    Properties:
+      RepositoryName:
+        Fn::Sub: "${ServiceName}"
+      RepositoryDescription:
+        Fn::Sub:
+          This is a repository for ${ServiceName} project.

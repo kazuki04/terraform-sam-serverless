@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Terraform Environment.
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: The service name.
+  EnvironmentIdentifier:
+    Type: String
+    Description: The environment identifier.
+
+Resources:
+################################################################################
+# KMS for Terraform Environment
+################################################################################
+  TfeKms:
+    Type: AWS::KMS::Key
+    Properties:
+      Description:
+        Fn::Sub: KMS key for Terraform environment in ${EnvironmentIdentifier}"
+      KeyPolicy:
+        Version: '2012-10-17'
+        Id:
+          Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-tfe-policy-kms-terraform-environment"
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Sub: arn:aws:iam::${AWS::AccountId}:root
+            Action: kms:*
+            Resource: '*'
+      Tags:
+        - Key: "Name"
+          Value:
+            Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-tfe-kms-terraform-environment"
+        - Key: "EnvironmentIdentifier"
+          Value:
+            Ref: EnvironmentIdentifier
+
+  TfeKmsAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName:
+        Fn::Sub: "alias/${ServiceName}-${EnvironmentIdentifier}-tfe-kms-terraform-environment"
+      TargetKeyId:
+        Ref: TfeKms
+
+Outputs:
+  TfeKmsArn:
+    Description: The Arn of KMS.
+    Value:
+      Fn::GetAtt: TfeKms.Arn

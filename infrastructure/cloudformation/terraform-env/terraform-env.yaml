@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: This template creates Terraform environment resources. <e.g.> Terraform Backend, Terraform CI/CD Pipeline.
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: 'The Service name.'
+  EnvironmentIdentifier:
+    Type: String
+    Description: 'The environment identifier.'
+  BranchName:
+    Type: String
+    Description: 'The name of Branch for release.'
+  CodeCommitArn:
+    Type: String
+    Description: 'The Arn of CodeCommit Repository.'
+  TerraformVersion:
+    Type: String
+    Description: 'The version of Terraform.'
+
+Resources:
+  TerraformCommon:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      TemplateURL: ./terraform-common.yaml
+      Parameters:
+        ServiceName:
+          Ref: ServiceName
+        EnvironmentIdentifier:
+          Ref: EnvironmentIdentifier
+      Tags:
+        - Key: ServiceName
+          Value:
+            Ref: ServiceName
+        - Key: EnvironmentIdentifier
+          Value:
+            Ref: EnvironmentIdentifier
+
+  TerraformBackend:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      TemplateURL: ./terraform-backend.yaml
+      Parameters:
+        ServiceName:
+          Ref: ServiceName
+        EnvironmentIdentifier:
+          Ref: EnvironmentIdentifier
+        TfeKmsArn:
+          Fn::GetAtt: TerraformCommon.Outputs.TfeKmsArn
+      Tags:
+        - Key: ServiceName
+          Value:
+            Ref: ServiceName
+        - Key: EnvironmentIdentifier
+          Value:
+            Ref: EnvironmentIdentifier
+
+  TerraformPipeline:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      TemplateURL: ./terraform-pipeline.yaml
+      Parameters:
+        ServiceName:
+          Ref: ServiceName
+        EnvironmentIdentifier:
+          Ref: EnvironmentIdentifier
+        BranchName:
+          Ref: BranchName
+        CodeCommitArn:
+          Ref: CodeCommitArn
+        TerraformVersion:
+          Ref: TerraformVersion
+        TfeKmsArn: 
+          Fn::GetAtt: TerraformCommon.Outputs.TfeKmsArn
+        TfeTfBackendBucket:
+          Fn::GetAtt: TerraformBackend.Outputs.TfeTfBackendBucket
+        TfeDDBTableName:
+          Fn::GetAtt: TerraformBackend.Outputs.TfeDDBTableName
+      Tags:
+        - Key: ServiceName
+          Value:
+            Ref: ServiceName
+        - Key: EnvironmentIdentifier
+          Value:
+            Ref: EnvironmentIdentifier

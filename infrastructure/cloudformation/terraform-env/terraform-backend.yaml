@@ -1,0 +1,83 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Terraform Environment.
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: The service name.
+  EnvironmentIdentifier:
+    Type: String
+    Description: The environment identifier.
+  TfeKmsArn:
+    Type: String
+    Description: The Arn of KMS.
+
+Resources:
+################################################################################
+# S3
+################################################################################
+  TfeTfBackendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-tfe-s3-tf-backend"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: "aws:kms"
+              KMSMasterKeyID:
+                Ref: TfeKmsArn
+            BucketKeyEnabled: true
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: "Name"
+          Value:
+            Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-tfe-s3-tf-backend"
+        - Key: "EnvironmentIdentifier"
+          Value:
+            Ref: EnvironmentIdentifier
+
+################################################################################
+# DynamoDB
+################################################################################
+  TfeDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName:
+        Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-tfe-ddb-table"
+      KeySchema:
+        - AttributeName: "LockID"
+          KeyType: "HASH"
+      AttributeDefinitions:
+        - AttributeName: "LockID"
+          AttributeType: "S"
+      BillingMode: "PAY_PER_REQUEST"
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        KMSMasterKeyId:
+          Ref: TfeKmsArn
+        SSEEnabled: true
+        SSEType: "KMS"
+      Tags:
+        - Key: "Name"
+          Value:
+            Fn::Sub: "${ServiceName}-${EnvironmentIdentifier}-tfe-ddb-table"
+        - Key: "EnvironmentIdentifier"
+          Value:
+            Ref: EnvironmentIdentifier
+
+Outputs:
+  TfeTfBackendBucket:
+    Description: The terraform backend bucket name.
+    Value:
+      Ref: TfeTfBackendBucket
+
+  TfeDDBTableName:
+    Description: The DynamoDB table name.
+    Value:
+      Ref: TfeDDBTable
