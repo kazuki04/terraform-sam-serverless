@@ -26,6 +26,12 @@ module "iam" {
   environment_identifier = var.environment_identifier
 }
 
+module "kms" {
+  source                 = "../../modules/kms"
+  service_name           = var.service_name
+  environment_identifier = var.environment_identifier
+}
+
 module "s3" {
   source                 = "../../modules/s3"
   service_name           = var.service_name
