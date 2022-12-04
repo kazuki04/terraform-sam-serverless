@@ -22,7 +22,7 @@ variable "frontend_app_name" {
   default     = ""
 }
 
-variable "runtime_version_for_codebuild" {
+variable "runtime_version_for_frontend" {
   description = "Then run time version for CodeBuild."
   type        = string
   default     = ""
