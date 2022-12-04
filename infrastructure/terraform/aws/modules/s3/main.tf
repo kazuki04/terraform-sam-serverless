@@ -18,6 +18,11 @@ data "aws_iam_policy_document" "hosting" {
   statement {
     sid = "PublicReadGetObject"
 
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
     actions = [
       "s3:GetObject",
     ]
