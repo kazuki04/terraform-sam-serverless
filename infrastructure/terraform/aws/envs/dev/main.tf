@@ -21,7 +21,23 @@ provider "aws" {
 }
 
 module "s3" {
-  source = "../../modules/s3"
+  source                 = "../../modules/s3"
+  service_name           = var.service_name
+  environment_identifier = var.environment_identifier
+}
+
+module "codebuild" {
+  source                 = "../../modules/codebuild"
+  service_name           = var.service_name
+  environment_identifier = var.environment_identifier
+
+  build_timeout                = var.build_timeout
+  frontend_app_name            = var.frontend_app_name
+  runtime_version_for_frontend = var.runtime_version_for_frontend
+}
+
+module "cloudwatch" {
+  source                 = "../../modules/cloudwatch"
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
 }
