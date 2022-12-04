@@ -39,7 +39,8 @@ resource "aws_codebuild_project" "frontend" {
           commands: 
             - echo Install phase...
             - echo Installing dependency...
-            - yarn install
+            - npm install -g next
+            - yarn
         build:
           commands:
             - echo Build phase...
