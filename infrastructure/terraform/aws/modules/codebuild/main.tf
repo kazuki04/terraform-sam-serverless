@@ -1,6 +1,6 @@
 locals {
-  runtime_language = element(split(":", var.runtime_version_for_codebuild), 0)
-  runtime_version  = element(split(":", var.runtime_version_for_codebuild), 1)
+  runtime_language = element(split(":", var.runtime_version_for_frontend), 0)
+  runtime_version  = element(split(":", var.runtime_version_for_frontend), 1)
 }
 
 resource "aws_codebuild_project" "frontend" {
