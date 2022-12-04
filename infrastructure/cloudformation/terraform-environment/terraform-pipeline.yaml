@@ -189,6 +189,7 @@ Resources:
                   - iam:SetDefaultPolicyVersion
                   - iam:SimulateCustomPolicy
                   - iam:SimulatePrincipalPolicy
+                  - iam:TagPolicy
                   - iam:TagRole
                   - iam:UntagRole
                   - iam:UpdateAccessKey
