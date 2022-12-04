@@ -9,3 +9,21 @@ variable "environment_identifier" {
   type        = string
   default     = ""
 }
+
+variable "kms_key_arn" {
+  description = "The Amazon Resource Name (ARN) of the key."
+  type        = string
+  default     = ""
+}
+
+variable "iam_role_codebuild_arn" {
+  description = "The Amazon Resource Name (ARN) of the CodeBuild."
+  type        = string
+  default     = ""
+}
+
+variable "iam_role_codepipeline_arn" {
+  description = "The Amazon Resource Name (ARN) of the CodePipelilne."
+  type        = string
+  default     = ""
+}

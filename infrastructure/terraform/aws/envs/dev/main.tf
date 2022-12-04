@@ -36,6 +36,10 @@ module "s3" {
   source                 = "../../modules/s3"
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
+
+  iam_role_codebuild_arn    = module.iam.iam_role_codebuild_arn
+  iam_role_codepipeline_arn = module.iam.iam_role_codepipeline_arn
+  kms_key_arn               = module.kms.kms_key_arn
 }
 
 module "codebuild" {
