@@ -36,6 +36,10 @@ resource "aws_codebuild_project" "frontend" {
         install:
           runtime-versions:
             ${local.runtime_language}: ${local.runtime_version}
+          commands: 
+            - echo Install phase...
+            - echo Installing dependency...
+            - yarn install
         build:
           commands:
             - echo Build phase...
