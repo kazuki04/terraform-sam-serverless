@@ -10,12 +10,12 @@ terraform {
 }
 
 provider "aws" {
-  region  = "${var.region}"
+  region  = var.region
 
   default_tags {
     tags = {
-      Environment     = var.environment_identifier
-      Service         = var.service_name
+      Environment = var.environment_identifier
+      Service     = var.service_name
     }
   }
 }

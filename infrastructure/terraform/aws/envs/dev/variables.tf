@@ -1,5 +1,5 @@
 ################################################################################
-# S3
+# Common
 ################################################################################
 variable "service_name" {
   description = "The service name."
@@ -9,6 +9,12 @@ variable "service_name" {
 
 variable "environment_identifier" {
   description = "The environment identifier."
+  type        = string
+  default     = ""
+}
+
+variable "region" {
+  description = "The region for AWS services."
   type        = string
   default     = ""
 }
