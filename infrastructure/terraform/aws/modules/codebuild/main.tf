@@ -39,7 +39,7 @@ resource "aws_codebuild_project" "frontend" {
           commands: 
             - echo Install phase...
             - echo Installing dependency...
-            - npm install -g next
+            - cd $CODEBUILD_SRC_DIR/program/frontend/${var.frontend_app_name}
             - yarn
         build:
           commands:
