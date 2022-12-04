@@ -22,8 +22,14 @@ variable "frontend_app_name" {
   default     = ""
 }
 
-variable "runtime_version_for_frontend" {
-  description = "Then run time version for frontend."
+variable "runtime_version_for_codebuild" {
+  description = "Then run time version for CodeBuild."
+  type        = string
+  default     = ""
+}
+
+variable "iam_role_codebuild_arn" {
+  description = "Amazon Resource Name (ARN) specifying the role."
   type        = string
   default     = ""
 }

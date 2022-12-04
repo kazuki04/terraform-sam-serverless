@@ -7,7 +7,7 @@ resource "aws_codebuild_project" "frontend" {
   name          = "${var.service_name}-${var.environment_identifier}-cbproject-frontend"
   description   = "${var.service_name} CodeBuild project in ${var.environment_identifier}"
   build_timeout = var.build_timeout
-  service_role  = var.service_role_arn
+  service_role  = var.iam_role_codebuild_arn
 
   artifacts {
     type = "CODEPIPELINE"
