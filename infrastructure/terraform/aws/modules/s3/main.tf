@@ -9,23 +9,26 @@ resource "aws_s3_bucket" "hosting" {
   }
 }
 
-# resource "aws_s3_bucket_policy" "hosting" {
-#   bucket = aws_s3_bucket.hosting.id
-#   policy = data.aws_iam_policy_document.combined[0].json
-# }
+resource "aws_s3_bucket_policy" "hosting" {
+  bucket = aws_s3_bucket.hosting.id
+  policy = data.aws_iam_policy_document.hosting.json
+}
 
-# data "aws_iam_policy_document" "combined" {
-#   source_policy_documents = compact([
-#     var.attach_elb_log_delivery_policy ? data.aws_iam_policy_document.elb_log_delivery[0].json : "",
-#     var.attach_lb_log_delivery_policy ? data.aws_iam_policy_document.lb_log_delivery[0].json : "",
-#     var.attach_require_latest_tls_policy ? data.aws_iam_policy_document.require_latest_tls[0].json : "",
-#     var.attach_deny_insecure_transport_policy ? data.aws_iam_policy_document.deny_insecure_transport[0].json : "",
-#     var.attach_inventory_destination_policy ? data.aws_iam_policy_document.inventory_destination_policy[0].json : "",
-#     var.attach_policy ? var.policy : ""
-#   ])
-# }
+data "aws_iam_policy_document" "hosting" {
+  statement {
+    sid = "PublicReadGetObject"
 
-resource "aws_s3_bucket_website_configuration" "example" {
+    actions = [
+      "s3:GetObject",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.hosting.id}/*",
+    ]
+  }
+}
+
+resource "aws_s3_bucket_website_configuration" "hosting" {
   bucket = aws_s3_bucket.hosting.bucket
 
   index_document {
