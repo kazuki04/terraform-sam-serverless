@@ -40,7 +40,7 @@ resource "aws_codepipeline" "program" {
     name = "Build"
 
     action {
-      name             = "BuildFluentBit"
+      name             = "BuildFrontend"
       category         = "Build"
       owner            = "AWS"
       provider         = "CodeBuild"
@@ -70,7 +70,7 @@ resource "aws_codepipeline" "program" {
     name = "Deploy"
 
     action {
-      name             = "Frontend"
+      name             = "DeployFrontend"
       category         = "Deploy"
       owner            = "AWS"
       provider         = "S3"

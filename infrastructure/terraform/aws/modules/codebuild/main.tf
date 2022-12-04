@@ -13,11 +13,6 @@ resource "aws_codebuild_project" "frontend" {
     type = "CODEPIPELINE"
   }
 
-  cache {
-    type  = "LOCAL"
-    modes = ["LOCAL_SOURCE_CACHE"]
-  }
-
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:4.0"
