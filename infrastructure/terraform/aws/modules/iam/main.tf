@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "codebuild_inline" {
 
 resource "aws_iam_role" "codebuild" {
   name               = "${var.service_name}-${var.environment_identifier}-role-cbproject"
-  assume_role_policy = data.aws_iam_policy_document.codebuild_assume
+  assume_role_policy = data.aws_iam_policy_document.codebuild_assume.json
 
   tags = {
     Name = "${var.service_name}-${var.environment_identifier}-role-cbproject"
