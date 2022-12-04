@@ -20,6 +20,12 @@ provider "aws" {
   }
 }
 
+module "iam" {
+  source                 = "../../modules/iam"
+  service_name           = var.service_name
+  environment_identifier = var.environment_identifier
+}
+
 module "s3" {
   source                 = "../../modules/s3"
   service_name           = var.service_name
@@ -34,6 +40,7 @@ module "codebuild" {
   build_timeout                = var.build_timeout
   frontend_app_name            = var.frontend_app_name
   runtime_version_for_frontend = var.runtime_version_for_frontend
+  iam_role_codebuild_arn       = module.iam.iam_role_codebuild_arn
 }
 
 module "cloudwatch" {
