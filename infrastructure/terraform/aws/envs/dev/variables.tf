@@ -19,6 +19,12 @@ variable "region" {
   default     = ""
 }
 
+variable "repository_name" {
+  description = "The name of repository."
+  type        = string
+  default     = ""
+}
+
 ################################################################################
 # CodeBuild
 ################################################################################
