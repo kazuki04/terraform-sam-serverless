@@ -49,7 +49,7 @@ resource "aws_codebuild_project" "frontend" {
             - yarn build
       artifacts:
         files:
-          - out/**/*
+          - $CODEBUILD_SRC_DIR/program/frontend/${var.frontend_app_name}/out/**/*
     EOT
   }
 
@@ -59,4 +59,3 @@ resource "aws_codebuild_project" "frontend" {
     Name = "${var.service_name}-${var.environment_identifier}-cbproject-frontend"
   }
 }
-
