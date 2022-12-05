@@ -49,9 +49,12 @@ resource "aws_codebuild_project" "frontend" {
             - yarn build
       artifacts:
         files:
-          - '**/*'
+          - '_next/**/*'
+          - index.html
+          - 404.html
+          - vercel.svg
+          - favicon.ico
         base-directory: $CODEBUILD_SRC_DIR/program/frontend/${var.frontend_app_name}/out
-        discard-paths: yes
     EOT
   }
 
