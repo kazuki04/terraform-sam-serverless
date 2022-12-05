@@ -49,7 +49,10 @@ resource "aws_codebuild_project" "frontend" {
             - yarn build
       artifacts:
         files:
-          - $CODEBUILD_SRC_DIR/program/frontend/${var.frontend_app_name}/out/**/*
+          - '**/*'
+        base-directory:
+          - $CODEBUILD_SRC_DIR/program/frontend/${var.frontend_app_name}/out
+        discard-paths: yes
     EOT
   }
 
