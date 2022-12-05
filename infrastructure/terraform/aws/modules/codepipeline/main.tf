@@ -80,7 +80,7 @@ resource "aws_codepipeline" "program" {
 
       configuration = {
         BucketName = var.s3_bucket_hosting_id
-        Extract    = false
+        Extract    = true
         # ObjectKey
         # KMSEncryptionKeyARN
         # CannedACL
