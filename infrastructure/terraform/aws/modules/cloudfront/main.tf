@@ -64,7 +64,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   dynamic "default_cache_behavior" {
-    for_each = [local.default_cache_behavior]
+    for_each = toset(local.default_cache_behavior)
     iterator = i
 
     content {
