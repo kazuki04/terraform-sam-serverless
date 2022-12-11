@@ -86,21 +86,6 @@ resource "aws_cloudfront_distribution" "this" {
       default_ttl = lookup(i.value, "default_ttl", null)
       max_ttl     = lookup(i.value, "max_ttl", null)
 
-      dynamic "forwarded_values" {
-        for_each = lookup(i.value, "use_forwarded_values", true) ? [true] : []
-
-        content {
-          query_string            = lookup(i.value, "query_string", false)
-          query_string_cache_keys = lookup(i.value, "query_string_cache_keys", [])
-          headers                 = lookup(i.value, "headers", [])
-
-          cookies {
-            forward           = lookup(i.value, "cookies_forward", "none")
-            whitelisted_names = lookup(i.value, "cookies_whitelisted_names", null)
-          }
-        }
-      }
-
       dynamic "lambda_function_association" {
         for_each = lookup(i.value, "lambda_function_association", [])
         iterator = l
