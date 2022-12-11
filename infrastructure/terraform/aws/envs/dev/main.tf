@@ -49,6 +49,7 @@ module "cloudfront" {
   environment_identifier = var.environment_identifier
 
   default_root_object                           = var.default_root_object
+  viewer_certificate                            = var.viewer_certificate
   s3_bucket_cloudfront_log_id                   = module.s3.s3_bucket_cloudfront_log_id
   s3_bucket_hosting_bucket_regional_domain_name = module.s3.s3_bucket_hosting_bucket_regional_domain_name
   s3_bucket_hosting_id                          = module.s3.s3_bucket_hosting_id

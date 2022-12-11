@@ -10,7 +10,7 @@ locals {
   default_cache_behavior = [
     {
       target_origin_id         = var.s3_bucket_hosting_id
-      viewer_protocol_policy   = "https-only"
+      viewer_protocol_policy   = "redirect-to-https"
       allowed_methods          = ["GET", "HEAD"]
       cached_methods           = ["GET", "HEAD"]
       compress                 = true
