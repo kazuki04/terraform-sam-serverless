@@ -11,10 +11,10 @@ output "s3_bucket_artifact_id" {
 
 output "s3_bucket_cloudfront_log_domain_name" {
   description = "The domain name of the CloudFront log bucket."
-  value       = aws_s3_bucket.cloudfront_log.domain_name
+  value       = aws_s3_bucket.cloudfront_log.bucket_domain_name
 }
 
 output "s3_bucket_hosting_bucket_regional_domain_name" {
   description = "The bucket region-specific domain name."
-  value       = aws_s3_bucket.hosting.domain_name
+  value       = aws_s3_bucket.hosting.domain_name.bucket_domain_name
 }
