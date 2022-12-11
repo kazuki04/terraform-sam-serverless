@@ -7,17 +7,15 @@ locals {
     }
   ]
 
-  default_cache_behavior = [
-    {
-      target_origin_id         = var.s3_bucket_hosting_id
-      viewer_protocol_policy   = "redirect-to-https"
-      allowed_methods          = ["GET", "HEAD"]
-      cached_methods           = ["GET", "HEAD"]
-      compress                 = true
-      cache_policy_id          = aws_cloudfront_cache_policy.hosting.id
-      origin_request_policy_id = aws_cloudfront_origin_request_policy.hosting.id
-    }
-  ]
+  default_cache_behavior = {
+    target_origin_id         = var.s3_bucket_hosting_id
+    viewer_protocol_policy   = "redirect-to-https"
+    allowed_methods          = ["GET", "HEAD"]
+    cached_methods           = ["GET", "HEAD"]
+    compress                 = true
+    cache_policy_id          = aws_cloudfront_cache_policy.hosting.id
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.hosting.id
+  }
 }
 
 resource "aws_cloudfront_distribution" "this" {
@@ -64,7 +62,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   dynamic "default_cache_behavior" {
-    for_each = toset(local.default_cache_behavior)
+    for_each = [local.default_cache_behavior]
     iterator = i
 
     content {
