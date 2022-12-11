@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "hosting" {
     condition {
       test     = "StringEquals"
       variable = "aws:SourceArn"
-      values   = [var.cloudfront_distribution_arn]
+      values   = var.cloudfront_distribution_arn
     }
   }
 }
