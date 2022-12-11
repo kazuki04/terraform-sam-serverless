@@ -27,3 +27,9 @@ variable "iam_role_codepipeline_arn" {
   type        = string
   default     = ""
 }
+
+variable "cloudfront_distribution_arn" {
+  description = "The ARN (Amazon Resource Name) for the distribution. For example: arn:aws:cloudfront::$AWS account ID:distribution/EDFDVBD632BHDS5."
+  type        = string
+  default     = ""
+}

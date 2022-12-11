@@ -37,9 +37,10 @@ module "s3" {
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
 
-  iam_role_codebuild_arn    = module.iam.iam_role_codebuild_arn
-  iam_role_codepipeline_arn = module.iam.iam_role_codepipeline_arn
-  kms_key_arn               = module.kms.kms_key_arn
+  iam_role_codebuild_arn      = module.iam.iam_role_codebuild_arn
+  iam_role_codepipeline_arn   = module.iam.iam_role_codepipeline_arn
+  kms_key_arn                 = module.kms.kms_key_arn
+  cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
 }
 
 module "cloudfront" {
@@ -47,14 +48,10 @@ module "cloudfront" {
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
 
+  default_root_object                           = var.default_root_object
   s3_bucket_cloudfront_log_id                   = module.s3.s3_bucket_cloudfront_log_id
   s3_bucket_hosting_bucket_regional_domain_name = module.s3.s3_bucket_hosting_bucket_regional_domain_name
   s3_bucket_hosting_id                          = module.s3.s3_bucket_hosting_id
-  default_root_object                           = module.s3.default_root_object
-
-  viewer_certificate = {
-    cloudfront_default_certificate = true
-  }
 }
 
 module "codebuild" {

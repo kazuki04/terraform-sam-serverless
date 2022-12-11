@@ -3,7 +3,7 @@ locals {
     {
       domain_name              = var.s3_bucket_hosting_bucket_regional_domain_name
       origin_id                = var.s3_bucket_hosting_id
-      origin_access_control_id = aws_cloudfront_origin_access_control.this.id
+      origin_access_control_id = aws_cloudfront_origin_access_control.hosting.id
     }
   ]
 
