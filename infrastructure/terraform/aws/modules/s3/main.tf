@@ -2,7 +2,7 @@
 # Hosting
 ################################################################################
 resource "aws_s3_bucket" "hosting" {
-  bucket        = "${var.service_name}-${var.environment_identifier}-s3-hosting"
+  bucket = "${var.service_name}-${var.environment_identifier}-s3-hosting"
 
   tags = {
     Name = "${var.service_name}-${var.environment_identifier}-s3-hosting"
@@ -16,20 +16,26 @@ resource "aws_s3_bucket_policy" "hosting" {
 
 data "aws_iam_policy_document" "hosting" {
   statement {
-    sid = "PublicReadGetObject"
-
     principals {
-      type        = "*"
-      identifiers = ["*"]
+      type = "Service"
+      identifiers = [
+        "cloudfront.amazonaws.com"
+      ]
     }
 
     actions = [
-      "s3:GetObject",
+      "s3:GetObject"
     ]
 
     resources = [
-      "arn:aws:s3:::${aws_s3_bucket.hosting.id}/*",
+      "${aws_s3_bucket.artifact.arn}/",
     ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceArn"
+      values   = [var.cloudfront_distribution_arn]
+    }
   }
 }
 
@@ -86,7 +92,7 @@ resource "aws_s3_bucket_logging" "hosting_log" {
 data "aws_iam_policy_document" "artifact" {
   statement {
     principals {
-      type        = "AWS"
+      type = "AWS"
       identifiers = [
         var.iam_role_codebuild_arn,
         var.iam_role_codepipeline_arn
@@ -105,7 +111,7 @@ data "aws_iam_policy_document" "artifact" {
 
   statement {
     principals {
-      type        = "AWS"
+      type = "AWS"
       identifiers = [
         var.iam_role_codebuild_arn,
         var.iam_role_codepipeline_arn
