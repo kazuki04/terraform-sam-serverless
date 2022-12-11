@@ -14,7 +14,7 @@ output "s3_bucket_cloudfront_log_id" {
   value       = aws_s3_bucket.cloudfront_log.id
 }
 
-output "s3_bucket_hosting_bucket_regional_domain_name " {
+output "s3_bucket_hosting_bucket_regional_domain_name" {
   description = "The bucket region-specific domain name."
   value       = aws_s3_bucket.hosting.id
 }
