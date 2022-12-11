@@ -26,12 +26,18 @@ variable "repository_name" {
 }
 
 ################################################################################
-# CodeBuild
+# CloudFront
 ################################################################################
 variable "default_root_object" {
   description = "The defalut root object."
   type        = string
   default     = ""
+}
+
+variable "viewer_certificate" {
+  description = "The SSL configuration for this distribution (maximum one)."
+  type        = map(any)
+  default     = {}
 }
 
 ################################################################################
