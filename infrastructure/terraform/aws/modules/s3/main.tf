@@ -28,13 +28,15 @@ data "aws_iam_policy_document" "hosting" {
     ]
 
     resources = [
-      "${aws_s3_bucket.artifact.arn}/*",
+      "${aws_s3_bucket.hosting.arn}/*",
     ]
 
     condition {
       test     = "StringEquals"
       variable = "aws:SourceArn"
-      values   = var.cloudfront_distribution_arn
+      values = [
+        var.cloudfront_distribution_arn
+      ]
     }
   }
 }
