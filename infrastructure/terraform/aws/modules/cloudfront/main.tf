@@ -1,5 +1,5 @@
 locals {
-  origin = [
+  origins = [
     {
       domain_name              = var.s3_bucket_hosting_bucket_regional_domain_name
       origin_id                = var.s3_bucket_hosting_id
@@ -40,7 +40,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   dynamic "origin" {
-    for_each = var.origin
+    for_each = local.origins
 
     content {
       domain_name              = origin.value.domain_name
