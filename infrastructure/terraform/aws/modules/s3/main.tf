@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "hosting" {
     ]
 
     resources = [
-      "${aws_s3_bucket.artifact.arn}/",
+      "${aws_s3_bucket.artifact.arn}/*",
     ]
 
     condition {
