@@ -34,7 +34,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   logging_config {
-    bucket          = var.s3_bucket_cloudfront_log_id
+    bucket          = var.s3_bucket_cloudfront_log_domain_name
     prefix          = "${var.service_name}-${var.environment_identifier}"
     include_cookies = false
   }

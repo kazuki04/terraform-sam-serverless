@@ -22,8 +22,8 @@ variable "s3_bucket_hosting_id" {
   default     = ""
 }
 
-variable "s3_bucket_cloudfront_log_id" {
-  description = "The name of the CloudFront log bucket."
+variable "s3_bucket_cloudfront_log_domain_name" {
+  description = "The domain name of the CloudFront log bucket."
   type        = string
   default     = ""
 }
