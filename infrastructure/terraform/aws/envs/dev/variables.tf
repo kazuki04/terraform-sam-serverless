@@ -28,6 +28,15 @@ variable "repository_name" {
 ################################################################################
 # CodeBuild
 ################################################################################
+variable "default_root_object" {
+  description = "The defalut root object."
+  type        = string
+  default     = ""
+}
+
+################################################################################
+# CodeBuild
+################################################################################
 variable "build_timeout" {
   description = " Number of minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed. The default is 60 minutes."
   type        = string
