@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.45.0"
+    }
+  }
+}
+
 resource "aws_wafv2_web_acl" "ip_restriction" {
   name        = "${var.service_name}-${var.environment_identifier}-waf-ip-restriction"
   description = "This rule blocks requests from all IPs except the specific IPs."
@@ -42,7 +51,7 @@ resource "aws_wafv2_web_acl" "ip_restriction" {
 resource "aws_wafv2_ip_set" "ipv4" {
   name               = "${var.service_name}-${var.environment_identifier}-waf-ipset-v4"
   description        = "IP set for IPV4"
-  scope              = "REGIONAL"
+  scope              = "CLOUDFRONT"
   ip_address_version = "IPV4"
   addresses          = []
 
