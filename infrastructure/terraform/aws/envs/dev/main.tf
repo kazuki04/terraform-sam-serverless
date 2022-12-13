@@ -84,3 +84,9 @@ module "cloudwatch" {
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
 }
+
+module "waf" {
+  source                 = "../../modules/waf"
+  service_name           = var.service_name
+  environment_identifier = var.environment_identifier
+}
