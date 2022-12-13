@@ -20,6 +20,11 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  alias  = "virginia"
+  region = "us-east-1"
+}
+
 module "iam" {
   source                 = "../../modules/iam"
   service_name           = var.service_name
@@ -86,6 +91,10 @@ module "cloudwatch" {
 }
 
 module "waf" {
+  providers = {
+    aws = aws.virginia
+  }
+
   source                 = "../../modules/waf"
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
