@@ -1,11 +1,11 @@
-export interface Choices {
+export interface Options {
   [key: number]: string;
 }
 
 export interface Question {
-  questionNumber: number;
-  questionDescription: string;
-  choices: Choices;
+  id: number;
+  description: string;
+  options: Options;
 }
 
 export interface selectedOption {

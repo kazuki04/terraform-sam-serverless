@@ -25,7 +25,7 @@ const Survey: React.FC<any> = (props) => {
       return;
     }
 
-    let currentNumber = currentQuestion.questionNumber;
+    let currentNumber = currentQuestion.id;
 
     if (currentNumber === questions.length) {
       window.location.href = "/thankyou";
@@ -43,7 +43,7 @@ const Survey: React.FC<any> = (props) => {
 
   const handleClickBack = () => {
     if (selectedOptions.length != 0) {
-      let currentNumber = currentQuestion.questionNumber;
+      let currentNumber = currentQuestion.id;
 
       const copyArr = [...selectedOptions];
       copyArr.splice(-1);
@@ -58,11 +58,11 @@ const Survey: React.FC<any> = (props) => {
   return (
     <Box sx={{ width: "50%", margin: "auto", bgcolor: "background.paper" }}>
       <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-        {currentQuestion.questionNumber +
+        {currentQuestion.id+
           "/" +
           questions.length +
           "：" +
-          currentQuestion.questionDescription}
+          currentQuestion.description}
       </Typography>
       <List>
         <RadioGroup
@@ -71,13 +71,13 @@ const Survey: React.FC<any> = (props) => {
           value={radioValue}
           onChange={handleChange}
         >
-          {(Object.keys(questions[0].choices) as unknown as number[]).map(
+          {(Object.keys(questions[0].options) as unknown as number[]).map(
             (choice, index) => (
               <FormControlLabel
                 key={index}
-                value={currentQuestion.choices[choice]}
+                value={currentQuestion.options[choice]}
                 control={<Radio />}
-                label={currentQuestion.choices[choice]}
+                label={currentQuestion.options[choice]}
               />
             )
           )}
