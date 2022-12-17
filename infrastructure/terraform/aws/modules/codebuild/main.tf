@@ -174,7 +174,7 @@ resource "aws_codebuild_project" "sam_deploy" {
               --stack-name "${var.service_name}-${var.environment_identifier}-sam"
               --s3-bucket "${var.service_name}-${var.environment_identifier}-common-s3"
               --s3-prefix "${var.service_name}-${var.environment_identifier}-sam"
-              --region ${data.aws_region.name}
+              --region ${data.aws_region.current.name}
               --no-confirm-changeset true
               --no-disable-rollback true
               --capabilities LIST "CAPABILITY_IAM"
