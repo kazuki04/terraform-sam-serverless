@@ -40,6 +40,12 @@ variable "iam_role_codepipeline_arn" {
   default     = ""
 }
 
+variable "iam_role_cloudformation_arn" {
+  description = "The Amazon Resource Name (ARN) of role for CloudFormation."
+  type        = string
+  default     = ""
+}
+
 variable "codebuild_project_frontend_arn" {
   description = "ARN of the frontend CodeBuild project."
   type        = string

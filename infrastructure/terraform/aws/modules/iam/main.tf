@@ -124,19 +124,6 @@ data "aws_iam_policy_document" "codepipeline_inline" {
       "*"
     ]
   }
-
-  statement {
-    actions = [
-      "cloudformation:*",
-      "execute-api:*",
-      "iam:*",
-      "lambda:*",
-    ]
-
-    resources = [
-      "*"
-    ]
-  }
 }
 
 resource "aws_iam_role" "codepipeline" {
@@ -156,4 +143,54 @@ resource "aws_iam_policy" "codepipeline" {
 resource "aws_iam_role_policy_attachment" "codepipeline" {
   role       = aws_iam_role.codepipeline.name
   policy_arn = aws_iam_policy.codepipeline.arn
+}
+
+################################################################################
+# IAM resources for CloudFormation
+################################################################################
+data "aws_iam_policy_document" "cloudformation_assume" {
+  statement {
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudformation.amazonaws.com"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "cloudformation_inline" {
+  statement {
+    actions = [
+      "cloudformation:*",
+      "execute-api:*",
+      "iam:*",
+      "lambda:*",
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
+}
+
+resource "aws_iam_role" "cloudformation" {
+  name               = "${var.service_name}-${var.environment_identifier}-role-cloudformation"
+  assume_role_policy = data.aws_iam_policy_document.cloudformation_assume.json
+
+  tags = {
+    Name = "${var.service_name}-${var.environment_identifier}-role-cloudformation"
+  }
+}
+
+resource "aws_iam_policy" "cloudformation" {
+  name   = "${var.service_name}-${var.environment_identifier}-policy-cloudformation"
+  policy = data.aws_iam_policy_document.cloudformation_inline.json
+}
+
+resource "aws_iam_role_policy_attachment" "cloudformation" {
+  role       = aws_iam_role.cloudformation.name
+  policy_arn = aws_iam_policy.cloudformation.arn
 }
