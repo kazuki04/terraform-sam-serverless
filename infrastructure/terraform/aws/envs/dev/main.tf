@@ -77,6 +77,7 @@ module "codepipeline" {
   environment_identifier = var.environment_identifier
 
   repository_name                   = var.repository_name
+  iam_role_cloudformation_arn       = module.iam.iam_role_cloudformation_arn
   iam_role_codepipeline_arn         = module.iam.iam_role_codepipeline_arn
   codebuild_project_frontend_arn    = module.codebuild.codebuild_project_frontend_arn
   codebuild_project_sam_package_arn = module.codebuild.codebuild_project_sam_package_arn
