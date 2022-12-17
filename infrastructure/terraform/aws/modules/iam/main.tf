@@ -124,6 +124,19 @@ data "aws_iam_policy_document" "codepipeline_inline" {
       "*"
     ]
   }
+
+  statement {
+    actions = [
+      "cloudformation:*",
+      "execute-api:*",
+      "iam:*",
+      "lambda:*",
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
 }
 
 resource "aws_iam_role" "codepipeline" {

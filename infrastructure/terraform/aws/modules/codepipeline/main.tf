@@ -162,6 +162,7 @@ resource "aws_codepipeline" "sam" {
         ActionMode    = "CHANGE_SET_REPLACE"
         Capabilities  = "CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND"
         ChangeSetName = "sam-changeset"
+        RoleArn       = var.iam_role_codepipeline_arn
         StackName     = "${var.service_name}-${var.environment_identifier}-sam"
         TemplatePath  = "BuildArtifact::output-template.yaml"
       }
