@@ -144,7 +144,7 @@ resource "aws_codepipeline" "sam" {
       run_order        = "1"
 
       configuration = {
-        ProjectName = var.codebuild_project_sam_build_arn
+        ProjectName = var.codebuild_project_sam_package_arn
       }
     }
 
