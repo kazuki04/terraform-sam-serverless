@@ -45,3 +45,15 @@ variable "codebuild_project_frontend_arn" {
   type        = string
   default     = ""
 }
+
+variable "codebuild_project_sam_package_arn" {
+  description = "ARN of the sam package CodeBuild project."
+  type        = string
+  default     = ""
+}
+
+variable "codebuild_project_sam_deploy_arn" {
+  description = "ARN of the sam deploy CodeBuild project."
+  type        = string
+  default     = ""
+}

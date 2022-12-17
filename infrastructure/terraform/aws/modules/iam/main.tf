@@ -85,7 +85,7 @@ data "aws_iam_policy_document" "codepipeline_inline" {
     actions = [
       "codecommit:CancelUploadArchive",
       "codecommit:GetBranch",
-      "codecommit:GetCommit", 
+      "codecommit:GetCommit",
       "codecommit:GetUploadArchiveStatus",
       "codecommit:UploadArchive",
     ]

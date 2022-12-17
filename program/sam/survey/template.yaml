@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for survey app
+
+Globals:
+  Function:
+    Runtime: python3.9
+    Handler: app.lambda_handler
+    Timeout: 3
+
+Resources:
+  GetSurveysFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Zip
+      CodeUri: survey/get/
+      Events:
+        Survey:
+          Type: Api
+          Properties:
+            Path: api/v1/surveys
+            Method: get
+
+  GetQuestionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Zip
+      CodeUri: question/get/
+      Events:
+        Survey:
+          Type: Api
+          Properties:
+            Path: api/v1//questions
+            Method: get
