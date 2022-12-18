@@ -183,19 +183,22 @@ resource "aws_codepipeline" "sam" {
   }
 
   stage {
-    name = "Deploy"
+    name = "ExecuteChangeSet"
 
     action {
       name             = "DeploySAM"
-      category         = "Build"
+      category         = "Deploy"
       owner            = "AWS"
-      provider         = "CodeBuild"
-      input_artifacts  = ["BuildArtifact"]
+      provider         = "CloudFormation"
+      input_artifacts  = []
       output_artifacts = []
       version          = "1"
 
       configuration = {
-        ProjectName = var.codebuild_project_sam_deploy_arn
+        ActionMode    = "CHANGE_SET_EXECUTE"
+        ChangeSetName = "sam-changeset"
+        RoleArn       = var.iam_role_cloudformation_arn
+        StackName     = "${var.service_name}-${var.environment_identifier}-sam"
       }
     }
   }
