@@ -119,7 +119,7 @@ resource "aws_codebuild_project" "sam_package" {
             - sam package
               --s3-bucket "${var.service_name}-${var.environment_identifier}-common-s3"
               --output-template-file output-template.yaml
-              -- parameter-overrides
+              --parameter-overrides
                 SERVICE_NAME=${var.service_name}
                 ENVIRONMENT_IDENTIFIER=${var.environment_identifier}
                 DDB_SURVEY_TABLE_NAME=${local.ddb_survey_tabale_name}
