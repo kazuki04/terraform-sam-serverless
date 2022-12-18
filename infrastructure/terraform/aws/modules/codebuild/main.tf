@@ -194,7 +194,6 @@ resource "aws_codebuild_project" "sam_deploy" {
               --no-confirm-changeset true
               --no-disable-rollback true
               --capabilities LIST "CAPABILITY_IAM"
-        base-directory: $CODEBUILD_SRC_DIR/program/sam/survey
     EOT
   }
 
