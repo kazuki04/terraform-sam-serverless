@@ -124,6 +124,16 @@ data "aws_iam_policy_document" "codepipeline_inline" {
       "*"
     ]
   }
+
+  statement {
+    actions = [
+      "cloudformation:*"
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
 }
 
 resource "aws_iam_role" "codepipeline" {
@@ -162,6 +172,17 @@ data "aws_iam_policy_document" "cloudformation_assume" {
 }
 
 data "aws_iam_policy_document" "cloudformation_inline" {
+
+  statement {
+    actions = [
+      "iam:PassRole"
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
+
   statement {
     actions = [
       "cloudformation:*",
