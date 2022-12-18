@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for survey app
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: 'The Service name.'
+  EnvironmentIdentifier:
+    Type: String
+    Description: 'The environment identifier.'
+  DdbSurveyTableName:
+    Type: String
+    Description: 'The table name of survey ddb table.'
+  DdbQuestionTableName:
+    Type: String
+    Description: 'The table name of question ddb table.'
+  DdbResultTableName:
+    Type: String
+    Description: 'The table name of result ddb table.'
+
+Globals:
+  Function:
+    Runtime: python3.9
+    Handler: app.lambda_handler
+    Timeout: 3
+    Environment:
+      Variables:
+        SERVICE_NAME:
+          Ref: ServiceName
+        ENVIRONMENT_IDENTIFIER:
+          Ref: EnvironmentIdentifier
+        DDB_SURVEY_TABLE_NAME:
+          Ref: DdbSurveyTableName
+        DDB_QUESTION_TABLE_NAME:
+          Ref: DdbQuestionTableName
+        DDB_RESULT_TABLE_NAME:
+          Ref: DdbResultTableName
+
+Resources:
+  GetAllSurveysFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Zip
+      CodeUri: survey/get/
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: api/v1/surveys
+            Method: GET
+
+  PutItemsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Zip
+      CodeUri: survey/get/
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: api/v1/surveys
+            Method: POST
+
+  GetQuestionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Zip
+      CodeUri: question/get/
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: api/v1/questions
+            Method: GET
