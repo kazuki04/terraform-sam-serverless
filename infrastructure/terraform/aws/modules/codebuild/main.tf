@@ -115,11 +115,11 @@ resource "aws_codebuild_project" "sam_package" {
             - cd $CODEBUILD_SRC_DIR/program/sam/survey
             - echo Building...
             - sam build --parameter-overrides
-                SERVICE_NAME=${var.service_name}
-                ENVIRONMENT_IDENTIFIER=${var.environment_identifier}
-                DDB_SURVEY_TABLE_NAME=${local.ddb_survey_tabale_name}
-                DDB_QUESTION_TABLE_NAME=${local.ddb_question_table_name}
-                DDB_RESULT_TABLE_NAME=${local.ddb_result_table_name}
+                ServiceName=${var.service_name}
+                EnvironmentIdentifier=${var.environment_identifier}
+                DdbSurveyTableName=${local.ddb_survey_tabale_name}
+                DdbQuestionTableName=${local.ddb_question_table_name}
+                DdbResultTableName=${local.ddb_result_table_name}
             - echo Packaging...
             - sam package
               --s3-bucket "${var.service_name}-${var.environment_identifier}-common-s3"
