@@ -10,14 +10,20 @@ variable "environment_identifier" {
   default     = ""
 }
 
+variable "ddb_survey_table_attributes" {
+  description = "The attributes for survey ddb table."
+  type        = list(map(string))
+  default     = ""
+}
+
 variable "ddb_question_table_attributes" {
   description = "The attributes for question ddb table."
-  type        = string
+  type        = list(map(string))
   default     = ""
 }
 
 variable "ddb_result_table_attributes" {
   description = "The attributes for result ddb table."
-  type        = string
+  type        = list(map(string))
   default     = ""
 }

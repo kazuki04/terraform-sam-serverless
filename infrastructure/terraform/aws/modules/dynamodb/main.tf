@@ -7,7 +7,7 @@ resource "aws_dynamodb_table" "survey" {
   table_class    = "STANDARD"
 
   dynamic "attribute" {
-    for_each = var.survey_attributes
+    for_each = var.ddb_survey_table_attributes
 
     content {
       name = attribute.value.name
@@ -29,7 +29,7 @@ resource "aws_dynamodb_table" "question" {
   table_class    = "STANDARD"
 
   dynamic "attribute" {
-    for_each = var.question_attributes
+    for_each = var.ddb_question_table_attributes
 
     content {
       name = attribute.value.name
@@ -51,7 +51,7 @@ resource "aws_dynamodb_table" "result" {
   table_class    = "STANDARD"
 
   dynamic "attribute" {
-    for_each = var.result_attributes
+    for_each = var.ddb_result_table_attributes
 
     content {
       name = attribute.value.name

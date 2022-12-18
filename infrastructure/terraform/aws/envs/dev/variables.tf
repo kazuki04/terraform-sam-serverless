@@ -66,12 +66,12 @@ variable "runtime_version_for_frontend" {
 ################################################################################
 variable "ddb_question_table_attributes" {
   description = "The attributes for question ddb table."
-  type        = string
+  type        = list(map(string))
   default     = ""
 }
 
 variable "ddb_result_table_attributes" {
   description = "The attributes for result ddb table."
-  type        = string
+  type        = list(map(string))
   default     = ""
 }
