@@ -33,3 +33,21 @@ variable "iam_role_codebuild_arn" {
   type        = string
   default     = ""
 }
+
+variable "dynamodb_table_survey_arn" {
+  description = "ARN of the ddb table for survey"
+  type        = string
+  default     = ""
+}
+
+variable "dynamodb_table_question_arn" {
+  description = "ARN of the ddb table for question"
+  type        = string
+  default     = ""
+}
+
+variable "dynamodb_table_result_arn" {
+  description = "ARN of the ddb table for result"
+  type        = string
+  default     = ""
+}

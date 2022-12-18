@@ -1,8 +1,11 @@
 data "aws_region" "current" {}
 
 locals {
-  runtime_language = element(split(":", var.runtime_version_for_frontend), 0)
-  runtime_version  = element(split(":", var.runtime_version_for_frontend), 1)
+  runtime_language        = element(split(":", var.runtime_version_for_frontend), 0)
+  runtime_version         = element(split(":", var.runtime_version_for_frontend), 1)
+  ddb_survey_tabale_name  = element(split("/", var.dynamodb_table_survey_arn), 1)
+  ddb_question_table_name = element(split("/", var.dynamodb_table_question_arn), 1)
+  ddb_result_table_name   = element(split("/", var.dynamodb_table_result_arn), 1)
 }
 
 ################################################################################
@@ -116,6 +119,12 @@ resource "aws_codebuild_project" "sam_package" {
             - sam package
               --s3-bucket "${var.service_name}-${var.environment_identifier}-common-s3"
               --output-template-file output-template.yaml
+              -- parameter-overrides
+                SERVICE_NAME=${var.service_name}
+                ENVIRONMENT_IDENTIFIER=${var.environment_identifier}
+                DDB_SURVEY_TABLE_NAME=${local.ddb_survey_tabale_name}
+                DDB_QUESTION_TABLE_NAME=${local.ddb_question_table_name}
+                DDB_RESULT_TABLE_NAME=${local.ddb_result_table_name}
       artifacts:
         files:
           - output-template.yaml

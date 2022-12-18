@@ -69,6 +69,9 @@ module "codebuild" {
   frontend_app_name            = var.frontend_app_name
   runtime_version_for_frontend = var.runtime_version_for_frontend
   iam_role_codebuild_arn       = module.iam.iam_role_codebuild_arn
+  dynamodb_table_survey_arn    = module.dynamodb.dynamodb_table_survey_arn
+  dynamodb_table_question_arn  = module.dynamodb.dynamodb_table_question_arn
+  dynamodb_table_result_arn    = module.dynamodb.dynamodb_table_result_arn
 }
 
 module "codepipeline" {

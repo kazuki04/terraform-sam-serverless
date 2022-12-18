@@ -131,7 +131,7 @@ resource "aws_codepipeline" "sam" {
   }
 
   stage {
-    name = "Build"
+    name = "Pakcage"
 
     action {
       name             = "PackageSAM"
