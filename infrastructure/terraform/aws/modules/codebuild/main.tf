@@ -115,27 +115,26 @@ resource "aws_codebuild_project" "sam_package" {
             - cd $CODEBUILD_SRC_DIR/program/sam/survey
             - echo Building...
             - sam build
-            - echo Creating samconfig.toml...
-            - touch samconfig.toml
-            - echo "version = 0.1" >> samconfig.toml
-            - echo "[default]" >> samconfig.toml
-            - echo "[default.global.parameters]" >> samconfig.toml
-            - echo "parameter_overrides = 
-              \"ServiceName=${var.service_name}
-                EnvironmentIdentifier=${var.environment_identifier}
-                DdbSurveyTableName=${local.ddb_survey_tabale_name}
-                DdbQuestionTableName=${local.ddb_question_table_name}
-                DdbResultTableName=${local.ddb_result_table_name}\""
-              >> samconfig.toml
+            - echo Creating template-configuration.json...
+            - touch template-configuration.json
+            - echo "{" >> samconfig.toml
+            - echo "  \"Parameters\" : {"
+            - echo "    "ServiceName" : \"${var.service_name}\"," >> template-configuration.json
+            - echo "    "EnvironmentIdentifier" : \"${var.environment_identifier}\"," >> template-configuration.json
+            - echo "    "DdbSurveyTableName" : \"${local.ddb_survey_tabale_name}\"," >> template-configuration.json
+            - echo "    "DdbQuestionTableName" : \"${local.ddb_question_table_name}\"," >> template-configuration.json
+            - echo "    "DdbResultTableName" : \"${local.ddb_result_table_name}\"" >> template-configuration.json
+            - echo " }" >> samconfig.toml
+            - echo "}" >> samconfig.toml
             - cat samconfig.toml
             - echo Packaging...
             - sam package
               --s3-bucket "${var.service_name}-${var.environment_identifier}-common-s3"
-              --config-file samconfig.toml
               --output-template-file output-template.yaml
       artifacts:
         files:
           - output-template.yaml
+          - template-configuration.json
         base-directory: $CODEBUILD_SRC_DIR/program/sam/survey
     EOT
   }
