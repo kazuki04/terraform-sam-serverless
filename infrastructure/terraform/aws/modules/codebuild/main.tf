@@ -119,11 +119,11 @@ resource "aws_codebuild_project" "sam_package" {
             - touch template-configuration.json
             - echo "{" > template-configuration.json
             - echo "  \"Parameters\":{" >> template-configuration.json
-            - echo "    "ServiceName":\"${var.service_name}\"," >> template-configuration.json
-            - echo "    "EnvironmentIdentifier":\"${var.environment_identifier}\"," >> template-configuration.json
-            - echo "    "DdbSurveyTableName":\"${local.ddb_survey_tabale_name}\"," >> template-configuration.json
-            - echo "    "DdbQuestionTableName":\"${local.ddb_question_table_name}\"," >> template-configuration.json
-            - echo "    "DdbResultTableName":\"${local.ddb_result_table_name}\"" >> template-configuration.json
+            - echo "    \"ServiceName\":\"${var.service_name}\"," >> template-configuration.json
+            - echo "    \"EnvironmentIdentifier\":\"${var.environment_identifier}\"," >> template-configuration.json
+            - echo "    \"DdbSurveyTableName\":\"${local.ddb_survey_tabale_name}\"," >> template-configuration.json
+            - echo "    \"DdbQuestionTableName\":\"${local.ddb_question_table_name}\"," >> template-configuration.json
+            - echo "    \"DdbResultTableName\":\"${local.ddb_result_table_name}\"" >> template-configuration.json
             - echo "  }" >> template-configuration.json
             - echo "}" >> template-configuration.json
             - cat >> template-configuration.json
