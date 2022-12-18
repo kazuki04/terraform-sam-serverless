@@ -87,6 +87,15 @@ module "codepipeline" {
   s3_bucket_artifact_id             = module.s3.s3_bucket_artifact_id
 }
 
+module "dynamodb" {
+  source                 = "../../modules/dynamodb"
+  service_name           = var.service_name
+  environment_identifier = var.environment_identifier
+
+  ddb_question_attributes = var.ddb_question_table_attributes
+  ddb_result_attributes   = var.ddb_result_table_attributes
+}
+
 module "cloudwatch" {
   source                 = "../../modules/cloudwatch"
   service_name           = var.service_name

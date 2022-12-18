@@ -60,3 +60,18 @@ variable "runtime_version_for_frontend" {
   type        = string
   default     = ""
 }
+
+################################################################################
+# DynamoDB
+################################################################################
+variable "ddb_question_table_attributes" {
+  description = "The attributes for question ddb table."
+  type        = string
+  default     = ""
+}
+
+variable "ddb_result_table_attributes" {
+  description = "The attributes for result ddb table."
+  type        = string
+  default     = ""
+}
