@@ -81,6 +81,17 @@ data "aws_iam_policy_document" "codepipeline_assume" {
 }
 
 data "aws_iam_policy_document" "codepipeline_inline" {
+
+  statement {
+    actions = [
+      "iam:PassRole"
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
+
   statement {
     actions = [
       "codecommit:CancelUploadArchive",
