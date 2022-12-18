@@ -92,6 +92,7 @@ module "dynamodb" {
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
 
+  ddb_survey_table_attributes   = var.ddb_survey_table_attributes
   ddb_question_table_attributes = var.ddb_question_table_attributes
   ddb_result_table_attributes   = var.ddb_result_table_attributes
 }
