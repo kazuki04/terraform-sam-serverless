@@ -114,4 +114,6 @@ module "waf" {
   source                 = "../../modules/waf"
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
+
+  cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
 }
