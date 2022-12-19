@@ -200,6 +200,7 @@ data "aws_iam_policy_document" "cloudformation_inline" {
       "execute-api:*",
       "iam:*",
       "lambda:*",
+      "s3:*"
     ]
 
     resources = [
