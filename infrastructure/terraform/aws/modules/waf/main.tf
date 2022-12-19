@@ -18,7 +18,7 @@ resource "aws_wafv2_web_acl" "ip_restriction" {
 
   rule {
     name     = "allow-specific-ipv4-ips"
-    priority = 1
+    priority = 0
 
     action {
       allow {}
@@ -33,6 +33,27 @@ resource "aws_wafv2_web_acl" "ip_restriction" {
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "${var.service_name}-${var.environment_identifier}-waf-ip-restriction-ipv4"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "allow-specific-ipv6-ips"
+    priority = 1
+
+    action {
+      allow {}
+    }
+
+    statement {
+      ip_set_reference_statement {
+        arn = aws_wafv2_ip_set.ipv6.arn
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${var.service_name}-${var.environment_identifier}-waf-ip-restriction-ipv6"
       sampled_requests_enabled   = true
     }
   }
@@ -57,5 +78,17 @@ resource "aws_wafv2_ip_set" "ipv4" {
 
   tags = {
     Name = "${var.service_name}-${var.environment_identifier}-waf-ipset-v4"
+  }
+}
+
+resource "aws_wafv2_ip_set" "ipv6" {
+  name               = "${var.service_name}-${var.environment_identifier}-waf-ipset-v6"
+  description        = "IP set for IPV6"
+  scope              = "CLOUDFRONT"
+  ip_address_version = "IPV6"
+  addresses          = []
+
+  tags = {
+    Name = "${var.service_name}-${var.environment_identifier}-waf-ipset-v6"
   }
 }

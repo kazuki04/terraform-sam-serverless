@@ -63,3 +63,9 @@ variable "geo_restriction" {
   type        = any
   default     = {}
 }
+
+variable "wafv2_web_acl_ip_restriction_arn" {
+  description = "The ARN of the WAF WebACL."
+  type        = any
+  default     = {}
+}

@@ -196,10 +196,12 @@ data "aws_iam_policy_document" "cloudformation_inline" {
 
   statement {
     actions = [
+      "apigateway:*",
       "cloudformation:*",
       "execute-api:*",
       "iam:*",
       "lambda:*",
+      "s3:*"
     ]
 
     resources = [
