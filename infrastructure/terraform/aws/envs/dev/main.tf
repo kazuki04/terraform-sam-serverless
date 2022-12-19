@@ -58,6 +58,7 @@ module "cloudfront" {
   s3_bucket_cloudfront_log_domain_name          = module.s3.s3_bucket_cloudfront_log_domain_name
   s3_bucket_hosting_bucket_regional_domain_name = module.s3.s3_bucket_hosting_bucket_regional_domain_name
   s3_bucket_hosting_id                          = module.s3.s3_bucket_hosting_id
+  wafv2_web_acl_ip_restriction_arn              = module.waf.wafv2_web_acl_ip_restriction_arn
 }
 
 module "codebuild" {
@@ -114,6 +115,4 @@ module "waf" {
   source                 = "../../modules/waf"
   service_name           = var.service_name
   environment_identifier = var.environment_identifier
-
-  cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
 }

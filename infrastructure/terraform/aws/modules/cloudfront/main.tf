@@ -27,7 +27,7 @@ resource "aws_cloudfront_distribution" "this" {
   price_class         = "PriceClass_All"
   retain_on_delete    = false
   wait_for_deployment = true
-  # web_acl_id          = var.web_acl_id
+  web_acl_id          = var.wafv2_web_acl_ip_restriction_arn
 
   tags = {
     Name = "${var.service_name}-${var.environment_identifier}-cloudfront"

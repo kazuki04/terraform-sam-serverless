@@ -92,8 +92,3 @@ resource "aws_wafv2_ip_set" "ipv6" {
     Name = "${var.service_name}-${var.environment_identifier}-waf-ipset-v6"
   }
 }
-
-resource "aws_wafv2_web_acl_association" "cloudfront_ip_restriction" {
-  resource_arn = var.cloudfront_distribution_arn
-  web_acl_arn  = aws_wafv2_web_acl.ip_restriction.arn
-}
